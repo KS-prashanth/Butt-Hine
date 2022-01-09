@@ -1,0 +1,22 @@
+from PySide import QtCore
+
+forward=True
+r = 0
+
+def update():
+	global forward, r
+	FreeCAD.getDocument('projHingeDoor').getObject('Compound002').Placement = App.Placement(App.Vector(0,0,3.5),App.Rotation(App.Vector(1,0,0),r))
+	if forward:
+		if r >=180:
+			forward=False		
+		else:		
+			r += 0.5
+	else:
+		if r <=0:
+			forward=True		
+		else:		
+			r -= 0.5
+	
+timer = QtCore.QTimer()
+timer.timeout.connect(update) 
+timer.start(1)
